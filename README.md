@@ -32,10 +32,10 @@ A simple, interactive web application to practice mental arithmetic skills. The 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/mental-math-trainer.git
+git clone https://github.com/ApurvP13/Mental-Maths-Trainer.git
 ```
 
-2. Open `index.html` in your web browser
+2. Open `Math trainer.html` in your web browser
 
 That's it! No additional setup or dependencies required.
 
