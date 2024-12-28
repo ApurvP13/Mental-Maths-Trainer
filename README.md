@@ -49,6 +49,13 @@ That's it! No additional setup or dependencies required.
 6. If incorrect: The input box will shake, and you can try again
 7. Use the back button to switch modes
 
+## How to customise the number of digits for problems
+1. open the `index.html` file in any text editor
+2. scorll down to the `generateProblem()` function (around line 126)
+3. change the `90` and `10` in `Math.floor(Math.random() * 90) + 10;` to match the number of digits you need.
+4. for ex: (90 and 10) for 2 digit, and (900 and 100) for 3 digit
+5. save and reload the website.
+
 ## Technical Details
 
 Built using:
