@@ -35,13 +35,13 @@ A simple, interactive web application to practice mental arithmetic skills. The 
 git clone https://github.com/ApurvP13/Mental-Maths-Trainer.git
 ```
 
-2. Open `Math trainer.html` in your web browser
+2. Open `index.html` in your web browser
 
 That's it! No additional setup or dependencies required.
 
 ## OR (without cloning)
 1. Download the zip file
-2. Extract and click open on the `Math trainer.hmtl` file to run it.
+2. Extract and click open on the `index.hmtl` file to run it.
 
 ## How to Use
 
