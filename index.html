@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Math Trainer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .mode-buttons {
+            display: grid;
+            gap: 20px;
+            margin: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: white;
+            transition: transform 0.1s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        #back-button {
+            background-color: #666;
+            margin-bottom: 20px;
+        }
+
+        .problem-container {
+            display: none;
+            font-family: monospace;
+            font-size: 24px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .number {
+            text-align: right;
+            white-space: pre;
+        }
+
+        input {
+            font-size: 24px;
+            width: 120px;
+            padding: 5px;
+            margin-top: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: right;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mental Math Trainer</h1>
+
+        <div id="mode-selection" class="mode-buttons">
+            <button onclick="startMode('addition')">Addition</button>
+            <button onclick="startMode('subtraction')">Subtraction</button>
+            <button onclick="startMode('multiplication')">Multiplication</button>
+        </div>
+
+        <div id="problem-section" style="display:none;">
+            <button id="back-button" onclick="showModeSelection()">← Back</button>
+            <div class="problem-container">
+                <div class="number" id="number1"></div>
+                <div class="number" id="operator"></div>
+                <div class="number" id="number2"></div>
+                <div class="number">────────</div>
+                <input type="number" id="answer" onkeypress="checkEnter(event)">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = '';
+        let num1 = 0;
+        let num2 = 0;
+        let correctAnswer = 0;
+
+        function startMode(mode) {
+            currentMode = mode;
+            document.getElementById('mode-selection').style.display = 'none';
+            document.getElementById('problem-section').style.display = 'block';
+            document.querySelector('.problem-container').style.display = 'block';
+            generateProblem();
+        }
+
+        function showModeSelection() {
+            document.getElementById('mode-selection').style.display = 'grid';
+            document.getElementById('problem-section').style.display = 'none';
+        }
+
+        function generateProblem() {
+            // Generate numbers based on mode
+            if (currentMode === 'multiplication') {
+                num1 = Math.floor(Math.random() * 90) + 10;  // 2-digit number
+                num2 = Math.floor(Math.random() * 9) + 1;    // 1-digit number
+            } else {
+                num1 = Math.floor(Math.random() * 90) + 10; // 3-digit number
+                num2 = Math.floor(Math.random() * 90) + 10;   // 2-digit number
+            }
+
+            // Calculate correct answer
+            switch(currentMode) {
+                case 'addition':
+                    correctAnswer = num1 + num2;
+                    document.getElementById('operator').textContent = '+' + num2.toString().padStart(4, ' ');
+                    break;
+                case 'subtraction':
+                    if (num1 < num2) [num1, num2] = [num2, num1]; // Ensure positive result
+                    correctAnswer = num1 - num2;
+                    document.getElementById('operator').textContent = '-' + num2.toString().padStart(4, ' ');
+                    break;
+                case 'multiplication':
+                    correctAnswer = num1 * num2;
+                    document.getElementById('operator').textContent = '×' + num2.toString().padStart(4, ' ');
+                    break;
+            }
+
+            document.getElementById('number1').textContent = num1.toString().padStart(4, ' ');
+            document.getElementById('answer').value = '';
+            document.getElementById('answer').focus();
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answer').value);
+            const inputElement = document.getElementById('answer');
+
+            if (userAnswer === correctAnswer) {
+                generateProblem();
+            } else {
+                inputElement.classList.add('shake');
+                setTimeout(() => {
+                    inputElement.classList.remove('shake');
+                }, 300);
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                checkAnswer();
+            }
+        }
+    </script>
+</body>
+</html>
